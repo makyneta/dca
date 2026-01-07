@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <!-- Metadados -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Makyneta Studios, Lda." />
+    <meta name="description" content="Portefólio de Fotografia de Tomás Mota, feito como projeto final da disciplina de Design, Comunicação, e Audiovisuais. Explore trabalhos que capturam a essência através da luz, composição e tempo." />
+    <meta name="robots" content="index, follow">
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <!-- Scripts -->
+    <script src="assets/scripts/main.js"></script>
+    <!-- Title -->
+    <title>Portfólio de Fotografia | DCA | Tomás Mota</title>
+    <link rel="icon" href="https://makyneta.github.io/assets/images/site/favicon.jpg" type="image/jpg">
+</head>
+
+<body>
+
+    <!-- OVERLAY DE RUÍDO -->
+    <div class="noise-overlay"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- INTRO ANIMATION -->
+    <div id="intro-overlay">
+        <div class="intro-text-wrap">
+            <img src="assets/images/site/loader.jpg" alt="Loader">
+        </div>
+    </div>
+
+    <!-- HEADER (ATUALIZADO LOGO) -->
+    <header class="hover-trigger">
+        <div class="logo" onclick="switchView('home')">TOMÁSMOTA<span>.PHOTOGRAPHER</span></div>
+
+        <!-- Menu Desktop -->
+        <nav class="desktop-nav">
+            <ul class="hover-trigger">
+                <li><a href="#" onclick="switchView('home')">Trabalhos</a></li>
+                <li><a href="#" onclick="switchView('about')">Sobre</a></li>
+                <li><a href="#" onclick="switchView('contact')">Contactos</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão Hamburger Mobile -->
+        <div class="mobile-toggle hover-trigger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <!-- MENU MOBILE OVERLAY (CORRIGIDO) -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMenu()">&times;</button>
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-list">
+                <!-- Adicionado toggleMenu(false) para forçar o fecho -->
+                <li><a href="#" onclick="switchView('home'); toggleMenu(false)">Trabalhos</a></li>
+                <li><a href="#" onclick="switchView('about'); toggleMenu(false)">Sobre</a></li>
+                <li><a href="#" onclick="switchView('contact'); toggleMenu(false)">Contactos</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- VIEW: HOME -->
+    <main id="home-view" class="view active">
+        <section class="hero container reveal">
+            <h1>Visual<br>Storytelling</h1>
+            <p>Capturando a essência através da luz, composição e tempo.</p>
+        </section>
+
+        <section class="container">
+            <div class="category-grid" id="cat-grid">
+                <!-- JS Populates This -->
+            </div>
+        </section>
+    </main>
+
+    <!-- VIEW: GALERIA -->
+    <main id="gallery-view" class="view">
+        <button class="back-btn hover-trigger" onclick="switchView('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Voltar
+        </button>
+
+        <div class="container">
+            <h2 class="reveal" id="gal-title" style="font-size: 3rem; margin-bottom: 50px; text-align: center;">
+                Categoria</h2>
+            <div class="gallery-grid" id="gal-content"></div>
+        </div>
+    </main>
+
+    <!-- VIEW: SOBRE (COM SKILLS E SABEDORIA) -->
+    <main id="about-view" class="view">
+        <div class="container about-layout">
+            <div class="reveal">
+                <!-- Foto do Aluno -->
+                <img src="https://makyneta.github.io/assets/images/site/tomas-mota.jpg" class="about-img"
+                    alt="Tomás Mota">
+            </div>
+            <div class="about-content reveal">
+                <h2>O Artista</h2>
+                <p>Aluno do 3º ano do Curso Profissional de Multimédia. A minha abordagem à fotografia mistura técnica
+                    rigorosa com uma visão artística contemporânea.</p>
+                <p>Este portefólio documenta a evolução técnica no Módulo 9, explorando desde a iluminação clássica até
+                    técnicas experimentais de luz.</p>
+
+                <!-- --- SKILLS / APPS MMD --- -->
+                <div class="skills-section">
+                    <span class="section-label">Skills</span>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">HTML5, CSS3, JavaScript, TYPESCRIPT, PYTHON, REACT, PHP, MYSQL</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="95%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Adobe Lightroom Classic</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="90%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Word, Excel, PowerPoint (Microsofft Office)</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="85%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Adobe Photoshop, Gimp</span>
+                            <span class="skill-percent">60%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Adobe Illustrator</span>
+                            <span class="skill-percent">60%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Adobe Premiere Pro & After Effects</span>
+                            <span class="skill-percent">55%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="55%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">Adobe Animate 2D</span>
+                            <span class="skill-percent">50%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="50%"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-wrapper">
+                        <div class="skill-info">
+                            <span class="skill-name">3D Studio Max</span>
+                            <span class="skill-percent">45%</span>
+                        </div>
+                        <div class="skill-bar-bg">
+                            <div class="skill-bar-fill" data-width="45%"></div>
+                        </div>
+                    </div>
+
+                    <!-- --- SABEDORIA --- -->
+                    <div class="wisdom-text">
+                        <span class="section-label">- Nelson Mandela</span>
+                        <p>"A educação é a arma mais poderosa que pode usar para mudar o mundo"</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- VIEW: CONTACTOS -->
+    <main id="contact-view" class="view">
+        <div class="container contact-wrapper">
+            <div class="contact-info-box reveal">
+                <h2>Vamos Conversar?</h2>
+                <p style="color:#888; margin-bottom:40px;">Estou disponível para projetos freelance e colaborações.</p>
+
+                <div class="contact-item">
+                    <span class="contact-label">Telefone / WhatsApp</span>
+                    <a href="tel:+351913936776" class="contact-value hover-trigger">+351 913 936 776</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    <a href="mailto:makynetastudios@gmail.com"
+                        class="contact-value hover-trigger">makynetastudios@gmail.com</a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-label">Website Profissional</span>
+                    <a href="https://makyneta.github.io" target="_blank"
+                        class="contact-value hover-trigger">makyneta.github.io</a>
+                </div>
+            </div>
+
+            <form class="contact-form reveal hover-trigger"
+                onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso (Simulação)!'); this.reset();">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="name" placeholder=" " required>
+                    <label for="name" class="form-label">Nome</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" id="email" placeholder=" " required>
+                    <label for="email" class="form-label">Email</label>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-input" id="message" rows="4" placeholder=" " required></textarea>
+                    <label for="message" class="form-label">Mensagem</label>
+                </div>
+                <button type="submit" class="btn-submit hover-trigger">Enviar Mensagem</button>
+            </form>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <a href="https://makyneta.github.io"><span class="copyright">2026 © Makyneta Studios. Todos os direitos
+                    reservados.</span></a>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox">
+        <button class="lb-close hover-trigger" onclick="closeLB()">&times;</button>
+        <div class="lb-container">
+            <div class="lb-image-area">
+                <img id="lb-img" src="" alt="">
+            </div>
+            <div class="lb-info-panel">
+                <span class="info-label">Título</span>
+                <h3 class="info-value" id="lb-title" style="font-size: 1.8rem; margin-bottom: 20px;">---</h3>
+
+                <span class="info-label">Técnica</span>
+                <p class="info-value" id="lb-tech"
+                    style="font-size: 1rem; font-family: var(--font-body); margin-bottom: 30px;">---</p>
+
+                <!-- MANDATORY TRIO GRID -->
+                <div class="tech-grid">
+                    <div>
+                        <span class="info-label">Obturador</span>
+                        <div class="info-value" id="lb-shutter">---</div>
+                    </div>
+                    <div>
+                        <span class="info-label">Diafragma</span>
+                        <div class="info-value" id="lb-aperture">---</div>
+                    </div>
+                    <div>
+                        <span class="info-label">ISO</span>
+                        <div class="info-value" id="lb-iso">---</div>
+                    </div>
+                </div>
+
+                <!-- EXTRA INFO -->
+                <div class="info-extra">
+                    <span style="color:var(--accent); margin-right: 10px;">CÂMARA:</span>
+                    <span id="lb-camera">Canon EOS R5 • RF 50mm f/1.2L</span>
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
+                    <span class="info-label">Descrição</span>
+                    <p class="info-desc" id="lb-desc">...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
