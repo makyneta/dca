@@ -1,309 +1,622 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt-PT">
 <head>
-    <!-- Metadados -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Makyneta Studios, Lda." />
-    <meta name="description" content="Portefólio de Fotografia de Tomás Mota, feito como projeto final da disciplina de Design, Comunicação, e Audiovisuais. Explore trabalhos que capturam a essência através da luz, composição e tempo." />
-    <meta name="robots" content="index, follow">
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Styles -->
-    <link rel="stylesheet" href="assets/styles/main.css">
-    <!-- Title -->
-    <title>Portfólio de Fotografia | DCA | Tomás Mota</title>
-    <link rel="icon" href="https://makyneta.github.io/assets/images/site/favicon.jpg" type="image/jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Makyneta by Tomás Mota</title>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:         #0c0a08;
+      --bg2:        #100e0b;
+      --bg3:        #1a1610;
+      --border:     #2c241a;
+      --clay:       #b8956a;
+      --terracotta: #c17a4a;
+      --earth:      #8c6a48;
+      --smoke:      #5a4c3c;
+      --sand-light: #e0c9a6;
+      --accent:     #c4824a;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--sand-light);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    /* ── CURSOR ── */
+    .cursor      { position:fixed;width:10px;height:10px;background:var(--terracotta);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,height .3s;mix-blend-mode:screen; }
+    .cursor-ring { position:fixed;width:36px;height:36px;border:1px solid var(--clay);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s;opacity:.45; }
+    /* ── GRAIN ── */
+    body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.06;pointer-events:none;z-index:9990; }
+    /* ═══ HEADER */
+    .site-header {
+      position:fixed; top:0; left:0; right:0; z-index:9991;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.6rem 6vw; background:transparent;
+      transition:background .5s ease, padding .4s ease;
+    }
+    .site-header.scrolled {
+      background:rgba(10,8,6,.90);
+      backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      padding:1.1rem 6vw; border-bottom:1px solid rgba(44,36,26,.5);
+    }
+    .site-logo { display:flex;flex-direction:column;text-decoration:none;line-height:1;gap:.15rem; }
+    .logo-main { font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.1rem,2vw,1.5rem);color:#e0c9a6;letter-spacing:.04em;transition:color .3s; }
+    .logo-sub  { font-family:'Jost',sans-serif;font-weight:200;font-size:clamp(.52rem,.9vw,.65rem);letter-spacing:.32em;text-transform:uppercase;color:#5a4c3c;transition:color .3s; }
+    .site-logo:hover .logo-main { color:#c17a4a; }
+    .site-logo:hover .logo-sub  { color:#b8956a; }
+    .site-nav { display:flex;align-items:center;gap:3rem; }
+    .nav-link {
+      font-family:'Jost',sans-serif;font-weight:200;font-size:.68rem;
+      letter-spacing:.3em;text-transform:uppercase;text-decoration:none;
+      color:#e0c9a6;position:relative;transition:color .3s;cursor:none;
+    }
+    .nav-link::after { content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:#b8956a;transition:width .35s cubic-bezier(.76,0,.24,1); }
+    .nav-link:hover, .nav-link.active        { color:#c17a4a; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    .nav-toggle { display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px; }
+    .nav-toggle span { display:block;width:22px;height:1px;background:#5a4c3c;transition:transform .35s ease,background .3s; }
+    .nav-toggle:hover span { background:#b8956a; }
+    .nav-toggle.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { transform:translateY(-6px) rotate(-45deg); }
+    /* ═══ HERO */
+    .hero { min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 6vw 8vh;position:relative;overflow:hidden; }
+    .hero-slides { position:absolute;inset:0;z-index:0; }
+    .hero-slide  { position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.04);transition:opacity 1.6s cubic-bezier(.4,0,.2,1),transform 7s cubic-bezier(.25,.46,.45,.94);filter:saturate(.45) brightness(.52); }
+    .hero-slide.active { opacity:1;transform:scale(1); }
+    .hero-grain { position:absolute;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");opacity:.12;mix-blend-mode:overlay; }
+    .hero-dark  { position:absolute;inset:0;z-index:2;background:rgba(8,5,2,.42); }
+    .hero-fade  { position:absolute;bottom:0;left:0;right:0;height:55%;z-index:3;background:linear-gradient(to bottom,transparent 0%,rgba(12,10,8,.5) 35%,rgba(12,10,8,.82) 65%,#0c0a08 100%); }
+    .hero-vline { position:absolute;top:-20%;width:1px;height:160%;background:linear-gradient(to bottom,transparent,var(--clay),transparent);z-index:4;opacity:0;animation:vfade 2.5s ease forwards; }
+    .hero-vline:nth-child(1) { right:14%;animation-delay:.8s; }
+    .hero-vline:nth-child(2) { right:30%;animation-delay:1.1s; }
+    @keyframes vfade { to { opacity:.18; } }
+    .hero-title { position:relative;z-index:5;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.5rem,9vw,9rem);line-height:.92;color:var(--sand-light);opacity:0;animation:fadeUp 1.1s .6s ease forwards; }
+    .hero-title em { font-style:italic;color:var(--accent); }
+    .hero-sub   { position:relative;z-index:5;margin-top:2rem;font-weight:200;font-size:clamp(.72rem,1.3vw,.9rem);letter-spacing:.12em;color:var(--clay);max-width:340px;opacity:0;animation:fadeUp 1s .9s ease forwards; }
+    .hero-dots { position:absolute;bottom:2.8rem;left:6vw;z-index:5;display:flex;gap:.7rem;align-items:center;opacity:0;animation:fadeIn 1s 1.6s ease forwards; }
+    .hero-dot  { width:18px;height:1px;background:var(--smoke);transition:width .4s ease,background .4s ease;cursor:none; }
+    .hero-dot.active { width:36px;background:var(--clay); }
+    .hero-scroll { position:absolute;bottom:2.5rem;right:6vw;z-index:5;display:flex;align-items:center;gap:.8rem;font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--smoke);opacity:0;animation:fadeIn 1s 1.4s ease forwards; }
+    .hero-scroll-line { display:block;width:40px;height:1px;background:var(--border);position:relative;overflow:hidden; }
+    .hero-scroll-line::after { content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:var(--terracotta);animation:lineSlide 2s 1.6s ease-in-out infinite; }
+    @keyframes lineSlide { 0%{left:-100%} 50%{left:0%} 100%{left:100%} }
+    /* ═══ SECTION SHARED */
+    .section-intro { padding:10vh 6vw 6vh;display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap; }
+    .section-label { font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:var(--smoke);margin-bottom:.8rem; }
+    .section-title { font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.2rem);color:var(--sand-light);line-height:1.1; }
+    .section-desc  { max-width:320px;font-size:.8rem;line-height:1.9;color:var(--smoke);font-weight:300; }
+    /* ═══ PROJECTS GRID */
+    .projects-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 3px; }
+    .project-card  { position:relative;overflow:hidden;background:var(--bg3);cursor:none;display:block;text-decoration:none;color:inherit;aspect-ratio:3/4; }
+    .project-img   { width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.25,.46,.45,.94),filter .6s ease;filter:saturate(.55) brightness(.65); }
+    .project-card:hover .project-img { transform:scale(1.06);filter:saturate(.8) brightness(.82); }
+    .project-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(6,4,2,.92) 0%,rgba(6,4,2,.1) 55%,transparent 100%);opacity:0;transition:opacity .5s ease; }
+    .project-card:hover .project-overlay { opacity:1; }
+    .project-info  { position:absolute;bottom:0;left:0;right:0;padding:1.4rem 1.6rem;transform:translateY(10px);transition:transform .5s ease; }
+    .project-card:hover .project-info { transform:translateY(0); }
+    .project-name  { font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,1.8vw,1.7rem);font-weight:300;color:var(--sand-light);line-height:1.15; }
+    .project-tag   { font-size:.58rem;letter-spacing:.22em;color:var(--clay);margin-top:.3rem;text-transform:uppercase; }
+    .project-arrow { position:absolute;top:1.2rem;right:1.4rem;width:30px;height:30px;border:1px solid rgba(184,149,106,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.8) rotate(-45deg);transition:opacity .4s,transform .4s;color:var(--clay);font-size:.75rem; }
+    .project-card:hover .project-arrow { opacity:1;transform:scale(1) rotate(0deg); }
+    /* ═══ SOBRE */
+    .about-section {
+      padding:14vh 6vw 12vh;
+      border-top:1px solid var(--border);
+      display:grid;
+      grid-template-columns:1fr 1.6fr;
+      gap:8vw;
+      align-items:start;
+    }
+    .about-photo-wrap { position:relative; }
+    .about-photo-wrap img { width:100%;display:block;filter:saturate(.6) brightness(.8);transition:filter .6s ease; }
+    .about-photo-wrap:hover img { filter:saturate(.75) brightness(.88); }
+    .about-photo-wrap::before {
+      content:'';position:absolute;
+      top:16px; left:-16px; right:16px; bottom:-16px;
+      border:1px solid var(--border);pointer-events:none;z-index:-1;
+    }
+    .about-content { display:flex;flex-direction:column;gap:3rem; }
+    .about-eyebrow { font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:var(--smoke); }
+    .about-name { font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.95;color:var(--sand-light);margin-top:.5rem; }
+    .about-name em { font-style:italic;color:var(--accent); }
+    .about-bio { font-size:.85rem;line-height:2.1;color:var(--smoke); }
+    .about-block       { padding-top:2rem;border-top:1px solid var(--border); }
+    .about-block-label { font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--earth);margin-bottom:1.2rem; }
+    .exp-list   { display:flex;flex-direction:column;gap:1.4rem; }
+    .exp-role   { font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--sand-light);line-height:1.2; }
+    .exp-place  { font-size:.68rem;letter-spacing:.18em;color:var(--clay);margin-top:.2rem; }
+    .exp-period { font-size:.58rem;letter-spacing:.22em;color:var(--smoke);margin-top:.15rem;text-transform:uppercase; }
+    .hobbies-list { display:flex;flex-wrap:wrap;gap:.6rem; }
+    .hobby-tag { font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;border:1px solid var(--border);color:var(--smoke);padding:.4rem .9rem;transition:border-color .3s,color .3s; }
+    .hobby-tag:hover { border-color:var(--earth);color:var(--clay); }
+    /* ── SKILLS */
+    .skills-list { display:flex;flex-direction:column;gap:1.1rem; }
+    .skill-row   { display:flex;flex-direction:column;gap:.45rem; }
+    .skill-head  { display:flex;justify-content:space-between;align-items:baseline; }
+    .skill-name  { font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand-light); }
+    .skill-pct   { font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;color:var(--clay);letter-spacing:.05em; }
+    .skill-track { height:1px;background:var(--border);position:relative;overflow:hidden; }
+    .skill-fill  { position:absolute;left:0;top:0;bottom:0;background:linear-gradient(to right,var(--earth),var(--terracotta));width:0%;transition:width .9s cubic-bezier(.25,.46,.45,.94); }
+    /* ═══ CONTACTO */
+    .contact-section {
+      padding:14vh 6vw 12vh;
+      border-top:1px solid var(--border);
+      display:grid;
+      grid-template-columns:1fr 1.4fr;
+      gap:8vw;
+      align-items:start;
+    }
+    .contact-left { display:flex;flex-direction:column;gap:3rem; }
+    .contact-title { font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.95;color:var(--sand-light); }
+    .contact-title em { font-style:italic;color:var(--accent); }
+    .contact-subtitle { font-size:.82rem;line-height:1.9;color:var(--smoke);max-width:340px; }
+    .contact-links { display:flex;flex-direction:column;gap:0; }
+    .contact-link {
+      display:flex;align-items:center;gap:1.2rem;
+      text-decoration:none;color:var(--smoke);
+      font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+      transition:color .3s;cursor:none;
+      padding:1.2rem 0;border-bottom:1px solid var(--border);
+    }
+    .contact-link:first-child { border-top:1px solid var(--border); }
+    .contact-link:hover { color:var(--clay); }
+    .contact-link-icon { width:36px;height:36px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--earth);flex-shrink:0;transition:border-color .3s,color .3s; }
+    .contact-link:hover .contact-link-icon { border-color:var(--clay);color:var(--clay); }
+    .contact-link-text  { display:flex;flex-direction:column;gap:.15rem; }
+    .contact-link-label { font-size:.52rem;letter-spacing:.32em;color:var(--smoke);opacity:.6; }
+    .contact-link-val   { color:var(--sand-light);font-size:.72rem;letter-spacing:.1em; }
+    .contact-form { display:flex;flex-direction:column;gap:1.4rem; }
+    .form-row     { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+    .form-group   { display:flex;flex-direction:column;gap:.5rem; }
+    .form-label   { font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--smoke); }
+    .form-input, .form-textarea {
+      background:transparent;border:none;border-bottom:1px solid var(--border);
+      color:var(--sand-light);font-family:'Jost',sans-serif;font-weight:300;font-size:.82rem;
+      padding:.7rem 0;outline:none;transition:border-color .3s;width:100%;
+    }
+    .form-input:focus, .form-textarea:focus { border-bottom-color:var(--clay); }
+    .form-input::placeholder, .form-textarea::placeholder { color:var(--smoke);opacity:.5; }
+    .form-textarea { resize:none;height:100px; }
+    .form-submit {
+      display:inline-flex;align-items:center;gap:1rem;padding:.95rem 2.4rem;
+      border:1px solid var(--earth);background:transparent;color:var(--clay);
+      font-family:'Jost',sans-serif;font-weight:200;font-size:.7rem;
+      letter-spacing:.28em;text-transform:uppercase;
+      position:relative;overflow:hidden;transition:color .4s;cursor:none;align-self:flex-start;
+    }
+    .form-submit::before { content:'';position:absolute;inset:0;background:var(--earth);transform:translateX(-100%);transition:transform .4s cubic-bezier(.76,0,.24,1); }
+    .form-submit:hover::before { transform:translateX(0); }
+    .form-submit:hover { color:var(--sand-light); }
+    .form-submit span  { position:relative;z-index:1; }
+    .form-feedback { font-size:.72rem;letter-spacing:.15em;padding:.8rem 0;display:none; }
+    .form-feedback.success { color:var(--clay);display:block; }
+    .form-feedback.error   { color:var(--terracotta);display:block; }
+    /* ═══ FOOTER */
+    .site-footer { position:relative;z-index:9991;padding:2.5rem 6vw;border-top:1px solid #2c241a;display:flex;align-items:center;justify-content:center; }
+    .footer-copy, .footer-copy a { font-family:'Jost',sans-serif;font-weight:200;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:#82674b;transition:color .10s; }
+    .footer-copy a:hover { color:#c17a4a;text-decoration:underline; }
+    /* ── ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .reveal { opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+    /* ── RESPONSIVE */
+    @media(max-width:900px){
+      .about-section   { grid-template-columns:1fr; }
+      .contact-section { grid-template-columns:1fr; }
+      .about-photo-wrap::before { display:none; }
+      .about-photo-wrap img { max-height:60vw;object-fit:cover; }
+    }
+    @media(max-width:768px){
+      .projects-grid { grid-template-columns:1fr 1fr; }
+      .project-overlay { opacity:1; }
+      .project-info    { transform:translateY(0); }
+      .project-arrow   { opacity:1;transform:scale(1); }
+      .form-row { grid-template-columns:1fr; }
+      .nav-toggle { display:flex; }
+      .site-nav {
+        position:fixed;inset:0;background:rgba(10,8,6,.97);backdrop-filter:blur(20px);
+        flex-direction:column;justify-content:center;align-items:center;
+        gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .4s ease;z-index:9992;
+      }
+      .site-nav.open { opacity:1;pointer-events:all; }
+      .nav-link   { font-size:.8rem;letter-spacing:.35em; }
+      .nav-toggle { position:relative;z-index:9993; }
+    }
+    @media(max-width:480px){ .projects-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
-
 <body>
+  <div class="cursor"      id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
 
-    <!-- OVERLAY DE RUÍDO -->
-    <div class="noise-overlay"></div>
+  <!-- ══ HEADER ══ -->
+  <header class="site-header" id="site-header-bar">
+    <a href="#inicio" class="site-logo">
+      <span class="logo-main">Tomás Mota</span>
+      <span class="logo-sub">PHOTOGRAPHY</span>
+    </a>
+    <nav class="site-nav" id="site-nav">
+      <a href="#projetos" class="nav-link">Projetos</a>
+      <a href="#sobre"    class="nav-link">Sobre</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+  </header>
 
-    <!-- CUSTOM CURSOR -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="inicio">
+    <div class="hero-slides">
+      <div class="hero-slide active" style="background-image:url('assets/images/portfolio/panning/IMG_8843.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('assets/images/portfolio/light-panting/IMG_8090.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('assets/images/portfolio/arrastamento/IMG_8321.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('assets/images/portfolio/iluminação/contra-luz_02.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('assets/images/portfolio/iluminação/IMG_8198.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('assets/images/portfolio/iluminação/IMG_8097.jpg')"></div>
+    </div>
+    <div class="hero-grain"></div>
+    <div class="hero-dark"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-vline"></div>
+    <div class="hero-vline"></div>
+    <h1 class="hero-title">Portfólio<br><em>Fotografia</em></h1>
+    <p class="hero-sub">Fotografia que captura o que mantém e o que desaparece.</p>
+    <div class="hero-dots" id="hero-dots"></div>
+    <div class="hero-scroll">Scroll <span class="hero-scroll-line"></span></div>
+  </section>
 
-    <!-- INTRO ANIMATION -->
-    <div id="intro-overlay">
-        <div class="intro-text-wrap">
-            <img src="assets/images/site/loader.jpg" alt="Loader">
-        </div>
+  <!-- ══ PROJETOS ══ -->
+  <section id="projetos">
+    <div class="section-intro reveal">
+      <div>
+        <p class="section-label">Projetos</p>
+        <h2 class="section-title">Selected<br>Work</h2>
+      </div>
+      <p class="section-desc">Uma coleção de trabalhos que exploram a luz, o espaço e o tempo. Cada projeto é uma narrativa visual construída com intenção.</p>
     </div>
 
-    <!-- HEADER (ATUALIZADO LOGO) -->
-    <header class="hover-trigger">
-        <div class="logo" onclick="switchView('home')">TOMÁSMOTA<span>.PHOTOGRAPHER</span></div>
+    <!-- ← UM SÓ projects-grid com todos os cards dentro -->
+    <div class="projects-grid">
 
-        <!-- Menu Desktop -->
-        <nav class="desktop-nav">
-            <ul class="hover-trigger">
-                <li><a href="#" onclick="switchView('home')">Trabalhos</a></li>
-                <li><a href="#" onclick="switchView('about')">Sobre</a></li>
-                <li><a href="#" onclick="switchView('contact')">Contactos</a></li>
-            </ul>
-        </nav>
-
-        <!-- Botão Hamburger Mobile -->
-        <div class="mobile-toggle hover-trigger" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+      <a href="p/arrastamento.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/arrastamento/IMG_8759.jpg" alt="Arrastamento" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Arrastamento</h3>
+          <p class="project-tag">4 fotografias @ 2026</p>
         </div>
-    </header>
+        <div class="project-arrow">↗</div>
+      </a>
 
-    <!-- MENU MOBILE OVERLAY (CORRIGIDO) -->
-    <div class="mobile-menu-overlay" id="mobileMenu">
-        <button class="mobile-close" onclick="toggleMenu()">&times;</button>
-        <nav class="mobile-nav">
-            <ul class="mobile-nav-list">
-                <!-- Adicionado toggleMenu(false) para forçar o fecho -->
-                <li><a href="#" onclick="switchView('home'); toggleMenu(false)">Trabalhos</a></li>
-                <li><a href="#" onclick="switchView('about'); toggleMenu(false)">Sobre</a></li>
-                <li><a href="#" onclick="switchView('contact'); toggleMenu(false)">Contactos</a></li>
-            </ul>
-        </nav>
+      <a href="p/congelamento.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/congelamento/IMG_8161.jpg" alt="Congelamento" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Congelamento</h3>
+          <p class="project-tag">3 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/iluminacao.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/iluminacao/contra-luz_02.jpg" alt="Iluminação" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Iluminação</h3>
+          <p class="project-tag">8 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/light-panting.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/light-panting/IMG_8066.jpg" alt="Light Panting" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Light Panting</h3>
+          <p class="project-tag">4 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/linhas-horizontais.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/linhas-horizontais/IMG_8927.jpg" alt="Linhas Horizontais" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Linhas Horizontais</h3>
+          <p class="project-tag">3 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/panning.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/panning/IMG_8843.jpg" alt="Panning" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Panning</h3>
+          <p class="project-tag">4 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/panoramica.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/panoramica/01.jpg" alt="Panorâmica" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Panorâmica</h3>
+          <p class="project-tag">2 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/ponto-de-fuga.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/ponto-de-fuga/IMG_8226.jpg" alt="Ponto de Fuga" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Ponto de Fuga</h3>
+          <p class="project-tag">5 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/profundidade-de-campo.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/profundidade-de-campo/IMG_8267.jpg" alt="Profundidade de Campo" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Profundidade de Campo</h3>
+          <p class="project-tag">4 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+      <a href="p/textura.html" class="project-card reveal">
+        <img class="project-img" src="assets/images/portfolio/textura/IMG_8230.jpg" alt="Textura" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <h3 class="project-name">Textura</h3>
+          <p class="project-tag">3 fotografias @ 2026</p>
+        </div>
+        <div class="project-arrow">↗</div>
+      </a>
+
+    </div><!-- /projects-grid -->
+  </section>
+
+  <!-- ══ SOBRE ══ -->
+  <section class="about-section reveal" id="sobre">
+    <div class="about-photo-wrap">
+      <img src="assets/images/profile/sic.jpg" alt="Tomás Mota" />
     </div>
+    <div class="about-content">
+      <div>
+        <p class="about-eyebrow">Sobre</p>
+        <h2 class="about-name">Tomás <em>Mota</em></h2>
+        <p class="about-bio" style="margin-top:1.4rem;">
+          Chamo-me Tomás Mota, e sou um multifacetado. Atualmente trabalho como <em>freelancer</em> no ramo da programação, fotografia, <em>design</em>, luz, som, e TI (informática). A minha paixão pela fotografia é o que me move a explorar e criar, e estou sempre à procura de novas formas de expressar a minha visão através da lente. Procuro também, sempre que possível, ajudar os outros. Além do citado anteriormente, também tenho paixão pela música, o que faz com que nos tempos livres, aprenda sempre mais todo o tipo de instrumento, pelo qual comecei pela guitarra acústica.
+        </p>
+      </div>
+      <div class="about-block">
+        <p class="about-block-label">Experiência</p>
+        <div class="exp-list">
+          <div class="exp-item">
+            <p class="exp-role"><em>Freelancer</em></p>
+            <p class="exp-place">Dev, fotógrafo, <em>designer</em>, <em>roadie</em>, técnico de informática.</p>
+            <p class="exp-period">2024 — Presente</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-block">
+        <p class="about-block-label">Voluntariado</p>
+        <div class="exp-list">
+          <div class="exp-item">
+            <p class="exp-role">Escola Secundária Calazans Duarte</p>
+            <p class="exp-place">Técnico de som e luz para ajuda em palestras. Ajudante e fotógrafo da concentração e publicitação dos cursos profissionais à comunidade escolar.</p>
+            <p class="exp-period">FEV, MAR 2026</p>
+          </div>
+          <div class="exp-item">
+            <p class="exp-role">Município Marinha Grande</p>
+            <p class="exp-place">Ajudante como voluntário da ajuda à comunidade após a passagem da tempestade <em>Kristin</em>.</p>
+            <p class="exp-period">JAN, FEV 2026</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-block">
+        <p class="about-block-label">Interesses (Hobby)</p>
+        <div class="hobbies-list">
+          <span class="hobby-tag">Programação</span>
+          <span class="hobby-tag">Web-Development</span>
+          <span class="hobby-tag">Música</span>
+          <span class="hobby-tag">Natureza</span>
+          <span class="hobby-tag">Viagem</span>
+        </div>
+      </div>
+      <div class="about-block">
+        <p class="about-block-label">Habilidades</p>
+        <div class="skills-list" id="skills-list"></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- VIEW: HOME -->
-    <main id="home-view" class="view active">
-        <section class="hero container reveal">
-            <h1>Visual<br>Storytelling</h1>
-            <p>Capturando a essência através da luz, composição e tempo.</p>
-        </section>
-
-        <section class="container">
-            <div class="category-grid" id="cat-grid">
-                <!-- JS Populates This -->
-            </div>
-        </section>
-    </main>
-
-    <!-- VIEW: GALERIA -->
-    <main id="gallery-view" class="view">
-        <button class="back-btn hover-trigger" onclick="switchView('home')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            Voltar
+  <!-- ══ CONTACTO ══ -->
+  <section class="contact-section reveal" id="contacto">
+    <div class="contact-left">
+      <div>
+        <p class="section-label">Contacto</p>
+        <h2 class="contact-title">Vamos<br><em>falar</em></h2>
+        <p class="contact-subtitle" style="margin-top:1.2rem;">
+          Para projetos, colaborações ou simplesmente para trocar ideias — estou disponível.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:makyneta@tutamail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          <div class="contact-link-text">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-val">makyneta@tutamail.com</span>
+          </div>
+        </a>
+        <a href="https://wa.me/351933338431" class="contact-link" target="_blank" rel="noopener">
+          <div class="contact-link-icon">↗</div>
+          <div class="contact-link-text">
+            <span class="contact-link-label">WhatsApp</span>
+            <span class="contact-link-val">+351 933 338 431</span>
+          </div>
+        </a>
+        <a href="https://makyneta.github.io" class="contact-link" target="_blank" rel="noopener">
+          <div class="contact-link-icon">⊕</div>
+          <div class="contact-link-text">
+            <span class="contact-link-label">Website</span>
+            <span class="contact-link-val">makyneta.github.io</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/xvgbagja" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="f-name">Nome</label>
+          <input class="form-input" id="f-name" name="name" type="text" placeholder="O teu nome" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-email">Email</label>
+          <input class="form-input" id="f-email" name="email" type="email" placeholder="email@exemplo.com" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-subject">Assunto</label>
+        <input class="form-input" id="f-subject" name="subject" type="text" placeholder="Projeto, colaboração, outro..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-msg">Mensagem</label>
+        <textarea class="form-textarea" id="f-msg" name="message" placeholder="Conta-me um pouco mais..." required></textarea>
+      </div>
+      <div>
+        <button class="form-submit" type="submit">
+          <span>Enviar mensagem</span><span>→</span>
         </button>
+        <p class="form-feedback" id="form-feedback"></p>
+      </div>
+    </form>
+  </section>
 
-        <div class="container">
-            <h2 class="reveal" id="gal-title" style="font-size: 3rem; margin-bottom: 50px; text-align: center;">
-                Categoria</h2>
-            <div class="gallery-grid" id="gal-content"></div>
-        </div>
-    </main>
+  <!-- ══ FOOTER ══ -->
+  <footer class="site-footer">
+    <a href="https://makyneta.github.io" target="_blank" rel="noopener" style="text-decoration:none;">
+      <p class="footer-copy">Copyright © <span id="footer-year"></span> Makyneta Unipessoal, Lda. Todos os direitos reservados.</p>
+    </a>
+  </footer>
 
-    <!-- VIEW: SOBRE (COM SKILLS E SABEDORIA) -->
-    <main id="about-view" class="view">
-        <div class="container about-layout">
-            <div class="reveal">
-                <!-- Foto do Aluno -->
-                <img src="https://makyneta.github.io/assets/images/site/tomas-mota.jpg" class="about-img"
-                    alt="Tomás Mota">
-            </div>
-            <div class="about-content reveal">
-                <h2>O Artista</h2>
-                <p>Aluno do 3º ano do Curso Profissional de Multimédia. A minha abordagem à fotografia mistura técnica
-                    rigorosa com uma visão artística contemporânea.</p>
-                <p>Este portefólio documenta a evolução técnica no Módulo 9, explorando desde a iluminação clássica até
-                    técnicas experimentais de luz.</p>
+  <script>
+    const SKILLS = [
+      { name: 'Web_Development', pct: 95 },
+      { name: 'Lightroom',       pct: 85 },
+      { name: 'Fotografia',      pct: 75 },
+      { name: 'Design Gráfico',  pct: 70 },
+      { name: 'Photoshop',       pct: 65 },
+      { name: 'Premiere Pro',    pct: 50 },
+      { name: 'Vídeo',           pct: 40 },
+    ];
 
-                <!-- --- SKILLS / APPS MMD --- -->
-                <div class="skills-section">
-                    <span class="section-label">Skills</span>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">HTML5, CSS3, JavaScript, TYPESCRIPT, PYTHON, REACT, PHP, MYSQL</span>
-                            <span class="skill-percent">95%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="95%"></div>
-                        </div>
-                    </div>
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursor-ring');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{ mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'; });
+    (function loop(){ rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop); })();
+    function bindCursor(el){
+      el.addEventListener('mouseenter',()=>{ cursor.style.width='18px';cursor.style.height='18px';ring.style.width='56px';ring.style.height='56px'; });
+      el.addEventListener('mouseleave',()=>{ cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px'; });
+    }
+    document.querySelectorAll('a,button,input,textarea').forEach(bindCursor);
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Adobe Lightroom Classic</span>
-                            <span class="skill-percent">90%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="90%"></div>
-                        </div>
-                    </div>
+    const headerBar = document.getElementById('site-header-bar');
+    const navLinks  = document.querySelectorAll('.nav-link');
+    const sections  = ['inicio','projetos','sobre','contacto'];
+    window.addEventListener('scroll', () => {
+      headerBar.classList.toggle('scrolled', window.scrollY > 60);
+      let current = '';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 140) current = id;
+      });
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href').replace('#','');
+        link.classList.toggle('active', href === current);
+      });
+    }, { passive: true });
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Word, Excel, PowerPoint (Microsofft Office)</span>
-                            <span class="skill-percent">85%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="85%"></div>
-                        </div>
-                    </div>
+    const navToggle = document.getElementById('nav-toggle');
+    const siteNav   = document.getElementById('site-nav');
+    navToggle.addEventListener('click', () => { siteNav.classList.toggle('open'); navToggle.classList.toggle('open'); });
+    navLinks.forEach(link => link.addEventListener('click', () => { siteNav.classList.remove('open'); navToggle.classList.remove('open'); }));
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Adobe Photoshop, Gimp</span>
-                            <span class="skill-percent">60%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="60%"></div>
-                        </div>
-                    </div>
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); revObs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Adobe Illustrator</span>
-                            <span class="skill-percent">60%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="60%"></div>
-                        </div>
-                    </div>
+    const slides   = document.querySelectorAll('.hero-slide');
+    const dotsWrap = document.getElementById('hero-dots');
+    let current = 0, timer = null;
+    slides.forEach((_,i) => {
+      const d = document.createElement('div');
+      d.className = 'hero-dot' + (i===0?' active':'');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+      bindCursor(d);
+    });
+    function goTo(idx) {
+      const dots = dotsWrap.querySelectorAll('.hero-dot');
+      slides[current].classList.remove('active'); dots[current].classList.remove('active');
+      current=idx;
+      slides[current].classList.add('active'); dots[current].classList.add('active');
+      resetTimer();
+    }
+    function resetTimer() { clearInterval(timer); if(slides.length>1) timer=setInterval(()=>goTo((current+1)%slides.length),5000); }
+    resetTimer();
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Adobe Premiere Pro & After Effects</span>
-                            <span class="skill-percent">55%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="55%"></div>
-                        </div>
-                    </div>
+    const skillsList = document.getElementById('skills-list');
+    SKILLS.forEach(skill => {
+      const row = document.createElement('div');
+      row.className = 'skill-row';
+      row.dataset.pct = skill.pct;
+      row.innerHTML = `<div class="skill-head"><span class="skill-name">${skill.name}</span><span class="skill-pct">${skill.pct}%</span></div><div class="skill-track"><div class="skill-fill"></div></div>`;
+      skillsList.appendChild(row);
+    });
+    const skillObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.skill-row').forEach((row,i) => {
+          setTimeout(()=>{ row.querySelector('.skill-fill').style.width=row.dataset.pct+'%'; }, i*90);
+        });
+        skillObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+    skillObs.observe(skillsList);
 
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">Adobe Animate 2D</span>
-                            <span class="skill-percent">50%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="50%"></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-wrapper">
-                        <div class="skill-info">
-                            <span class="skill-name">3D Studio Max</span>
-                            <span class="skill-percent">45%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill" data-width="45%"></div>
-                        </div>
-                    </div>
-
-                    <!-- --- SABEDORIA --- -->
-                    <div class="wisdom-text">
-                        <span class="section-label">- Nelson Mandela</span>
-                        <p>"A educação é a arma mais poderosa que pode usar para mudar o mundo"</p>
-                    </div>
-                    <br>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- VIEW: CONTACTOS -->
-    <main id="contact-view" class="view">
-        <div class="container contact-wrapper">
-            <div class="contact-info-box reveal">
-                <h2>Vamos Conversar?</h2>
-                <p style="color:#888; margin-bottom:40px;">Estou disponível para projetos freelance e colaborações.</p>
-
-                <div class="contact-item">
-                    <span class="contact-label">Telefone / WhatsApp</span>
-                    <a href="tel:+351913936776" class="contact-value hover-trigger">+351 913 936 776</a>
-                </div>
-
-                <div class="contact-item">
-                    <span class="contact-label">Email</span>
-                    <a href="mailto:makynetastudios@gmail.com"
-                        class="contact-value hover-trigger">makynetastudios@gmail.com</a>
-                </div>
-
-                <div class="contact-item">
-                    <span class="contact-label">Website Profissional</span>
-                    <a href="https://makyneta.github.io" target="_blank"
-                        class="contact-value hover-trigger">makyneta.github.io</a>
-                </div>
-            </div>
-
-            <form class="contact-form reveal hover-trigger"
-                onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso (Simulação)!'); this.reset();">
-                <div class="form-group">
-                    <input type="text" class="form-input" id="name" placeholder=" " required>
-                    <label for="name" class="form-label">Nome</label>
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-input" id="email" placeholder=" " required>
-                    <label for="email" class="form-label">Email</label>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-input" id="message" rows="4" placeholder=" " required></textarea>
-                    <label for="message" class="form-label">Mensagem</label>
-                </div>
-                <button type="submit" class="btn-submit hover-trigger">Enviar Mensagem</button>
-            </form>
-
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-content">
-            <a href="https://makyneta.github.io"><span class="copyright">2026 © Makyneta Studios. Todos os direitos
-                    reservados.</span></a>
-        </div>
-    </footer>
-
-    <!-- LIGHTBOX -->
-    <div id="lightbox">
-        <button class="lb-close hover-trigger" onclick="closeLB()">&times;</button>
-        <div class="lb-container">
-            <div class="lb-image-area">
-                <img id="lb-img" src="" alt="">
-            </div>
-            <div class="lb-info-panel">
-                <span class="info-label">Título</span>
-                <h3 class="info-value" id="lb-title" style="font-size: 1.8rem; margin-bottom: 20px;">---</h3>
-
-                <span class="info-label">Técnica</span>
-                <p class="info-value" id="lb-tech"
-                    style="font-size: 1rem; font-family: var(--font-body); margin-bottom: 30px;">---</p>
-
-                <!-- MANDATORY TRIO GRID -->
-                <div class="tech-grid">
-                    <div>
-                        <span class="info-label">Obturador</span>
-                        <div class="info-value" id="lb-shutter">---</div>
-                    </div>
-                    <div>
-                        <span class="info-label">Diafragma</span>
-                        <div class="info-value" id="lb-aperture">---</div>
-                    </div>
-                    <div>
-                        <span class="info-label">ISO</span>
-                        <div class="info-value" id="lb-iso">---</div>
-                    </div>
-                </div>
-
-                <!-- EXTRA INFO -->
-                <div class="info-extra">
-                    <span style="color:var(--accent); margin-right: 10px;">CÂMARA:</span>
-                    <span id="lb-camera">Canon EOS R5 • RF 50mm f/1.2L</span>
-                </div>
-
-                <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px;">
-                    <span class="info-label">Descrição</span>
-                    <p class="info-desc" id="lb-desc">...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="assets/scripts/main.js"></script>
+    const form     = document.getElementById('contact-form');
+    const feedback = document.getElementById('form-feedback');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.style.opacity='.5'; btn.style.pointerEvents='none';
+      try {
+        const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+        if(res.ok){ feedback.textContent='Mensagem enviada — obrigado, entro em contacto em breve.'; feedback.className='form-feedback success'; form.reset(); }
+        else throw new Error();
+      } catch { feedback.textContent='Ocorreu um erro. Tenta de novo ou envia email diretamente.'; feedback.className='form-feedback error'; }
+      finally { btn.style.opacity=''; btn.style.pointerEvents=''; }
+    });
+  </script>
 </body>
 </html>
